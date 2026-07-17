@@ -1,0 +1,116 @@
+@model Ejercicio_Generación_Etiquetas.ViewModels.EtiquetaViewModel
+@{
+    ViewData["Title"] = "Detalle de etiqueta";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Detalle de etiqueta</h1>
+        <p class="text-muted mb-0">@Model.NumeroEtiqueta</p>
+    </div>
+
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        Volver al listado
+    </a>
+</div>
+
+Después agrega una tarjeta con la información principal:
+
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Información de la solicitud</span>
+
+        <span class="badge bg-@Model.ClaseBootstrapEstado">
+            @Model.Estado
+        </span>
+    </div>
+
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <strong>Orden:</strong>
+                <div>@Model.Orden</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Modelo:</strong>
+                <div>@Model.Modelo</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Color / talla:</strong>
+                <div>@Model.Color / @Model.Talla</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Usuario:</strong>
+                <div>@Model.Usuario</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Impresora:</strong>
+                <div>@Model.Impresora</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Prioridad:</strong>
+                <div>@Model.Prioridad</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Fecha de solicitud:</strong>
+                <div>@Model.FechaSolicitud.ToString("dd/MM/yyyy HH:mm")</div>
+            </div>
+
+            <div class="col-md-4">
+                <strong>Tiempo transcurrido:</strong>
+                <div>@Model.TiempoTranscurrido</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Progreso de impresión</div>
+
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <strong>Solicitadas:</strong> @Model.CantidadSolicitada
+            </div>
+
+            <div class="col-md-4">
+                <strong>Generadas:</strong> @Model.CantidadGenerada
+            </div>
+
+            <div class="col-md-4">
+                <strong>Pendientes:</strong> @Model.CantidadPendiente
+            </div>
+        </div>
+
+        <div class="progress" style="height: 28px;">
+            <div class="progress-bar bg-@Model.ClaseBootstrapEstado"
+                 role="progressbar"
+                 style="width: @Model.PorcentajeAvance.ToString("F0")%;"
+                 aria-valuenow="@Model.PorcentajeAvance.ToString("F0")"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+                @Model.PorcentajeAvance.ToString("F1")%
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit"
+       asp-route-id="@Model.Id"
+       class="btn btn-primary">
+        Editar
+    </a>
+
+    <a asp-action="Delete"
+       asp-route-id="@Model.Id"
+       class="btn btn-outline-danger">
+        Eliminar
+    </a>
+</div>

@@ -89,7 +89,16 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
 
         public IActionResult Detail(int id)
         {
-            return View();
+
+            var etiqueta = _repo.ObtenerPorId(id);
+
+            if (etiqueta is null)
+            {
+                return NotFound();
+            }
+
+            var viewmodel = EtiquetaViewModel.DesdeModelo(etiqueta);
+            return View(viewmodel);
         }
 
         public IActionResult Create()
