@@ -166,6 +166,12 @@ namespace Ejercicio_Generación_Etiquetas.Repositories
             var etiqueta = ObtenerPorId(id)
                 ?? throw new InvalidOperationException("La etiqueta no existe.");
 
+            if (nuevoEstado == EstadoEtiqueta.Impresa)
+            {
+                throw new InvalidOperationException(
+                    "El estado Impresa se asigna automáticamente al completar la cantidad solicitada.");
+            }
+
             if (etiqueta.Estado == EstadoEtiqueta.Cancelada &&
                 nuevoEstado == EstadoEtiqueta.Procesando)
             {

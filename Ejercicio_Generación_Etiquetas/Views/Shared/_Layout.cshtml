@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Ejercicio_Generación_Etiquetas</a>
+                <a class="navbar-brand" asp-controller="Etiqueta" asp-action="Dashboard">Etiquetas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,10 +21,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Etiqueta" asp-action="Dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-controller="Etiqueta" asp-action="Index">Etiquetas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Etiqueta" asp-action="Create">Nueva solicitud</a>
                         </li>
                     </ul>
                 </div>
@@ -33,13 +36,29 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData["Exito"] is string mensajeExito)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @mensajeExito
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            }
+
+            @if (TempData["Error"] is string mensajeError)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @mensajeError
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            }
+
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - Ejercicio_Generación_Etiquetas - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - Sistema de Generación de Etiquetas
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -251,6 +251,16 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Generar(int id, int cantidad)
         {
+            try
+            {
+                _repo.GenerarEtiquetas(id, cantidad);
+                TempData["Exito"] = "Las etiquetas se generaron correctamente.";
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
             return RedirectToAction(nameof(Detail), new { id });
         }
 
@@ -258,6 +268,16 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Cancelar(int id)
         {
+            try
+            {
+                _repo.Cancelar(id);
+                TempData["Exito"] = "La solicitud fue cancelada correctamente.";
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
             return RedirectToAction(nameof(Detail), new { id });
         }
 
@@ -265,6 +285,16 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CambiarEstado(int id, EstadoEtiqueta nuevoEstado)
         {
+            try
+            {
+                _repo.CambiarEstado(id, nuevoEstado);
+                TempData["Exito"] = "El estado de la solicitud se actualizó correctamente.";
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
             return RedirectToAction(nameof(Detail), new { id });
         }
     }
