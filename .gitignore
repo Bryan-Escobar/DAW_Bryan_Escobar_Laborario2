@@ -1,0 +1,36 @@
+## Visual Studio / Visual Studio Code
+.vs/
+.vscode/
+
+## Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+## Publish
+publish/
+*.Publish.xml
+
+## Others
+*.log
+*.cache
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## OS
+Thumbs.db
+Desktop.ini
+.DS_Store

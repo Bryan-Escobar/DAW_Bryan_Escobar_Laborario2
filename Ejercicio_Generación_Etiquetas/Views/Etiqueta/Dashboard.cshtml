@@ -1,0 +1,139 @@
+@model Ejercicio_Generación_Etiquetas.ViewModels.DashboardEtiquetaViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    var porcentajeAncho = Model.PorcentajeGlobal.ToString("F0");
+    var porcentajeTexto = Model.PorcentajeGlobal.ToString("F1");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Monitoreo de Producción</h1>
+    <span class="text-muted">@ViewData["FechaServidor"]</span>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-2">
+        <div class="card text-center border-dark">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Total</h6>
+                <p class="display-6 mb-0">@ViewData["TotalEtiquetas"]</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-secondary">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Pendientes</h6>
+                <p class="display-6 mb-0">@ViewData["Pendientes"]</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-primary">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Procesando</h6>
+                <p class="display-6 mb-0">@Model.Procesando</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-success">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Impresas</h6>
+                <p class="display-6 mb-0">@ViewData["Impresas"]</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-danger">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Errores</h6>
+                <p class="display-6 mb-0">@ViewData["Errores"]</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-warning">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Canceladas</h6>
+                <p class="display-6 mb-0">@Model.Canceladas</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Producción hoy</h5>
+                <p class="display-6 mb-0">@ViewData["ProduccionHoy"]</p>
+                <small class="text-muted">etiquetas generadas</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Avance global de producción</h5>
+                <div class="progress mb-2" style="height: 30px;">
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width: @porcentajeAncho%;"
+                         aria-valuenow="@porcentajeAncho"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                        @porcentajeTexto%
+                    </div>
+                </div>
+                <small class="text-muted">Porcentaje global generado</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Últimas 5 solicitudes</h5>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Orden</th>
+                    <th>Modelo</th>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                    <th>Avance</th>
+                    <th>Tiempo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var etiqueta in Model.UltimasSolicitudes)
+                {
+                    <tr>
+                        <td>@etiqueta.NumeroEtiqueta</td>
+                        <td>@etiqueta.Orden</td>
+                        <td>@etiqueta.Modelo</td>
+                        <td>@etiqueta.Usuario</td>
+                        <td>
+                            <span class="badge bg-@(etiqueta.ClaseBootstrapEstado)">@etiqueta.Estado</span>
+                        </td>
+                        <td>@(etiqueta.PorcentajeAvance.ToString("F1"))%</td>
+                        <td>@etiqueta.TiempoTranscurrido</td>
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-primary">Ver</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-primary">Ver todas las etiquetas</a>
+    <a asp-action="Create" class="btn btn-success">Nueva solicitud</a>
+</div>
