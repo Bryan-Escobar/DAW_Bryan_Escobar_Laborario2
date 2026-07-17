@@ -170,14 +170,48 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
 
         public IActionResult Edit(int id)
         {
-            return View();
+            var etiqueta = _repo.ObtenerPorId(id);
+
+            if (etiqueta is null)
+            {
+                return NotFound();
+            }
+
+            CargarListasFormulario();
+
+            return View(EtiquetaViewModel.DesdeModelo(etiqueta));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, EtiquetaViewModel viewModel)
         {
-            return RedirectToAction(nameof(Index));
+            if (id != viewModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                CargarListasFormulario();
+                return View(viewModel);
+            }
+
+            try
+            {
+                _repo.Actualizar(viewModel.ToModelo());
+
+                TempData["Exito"] = "La solicitud se actualizó correctamente.";
+
+                return RedirectToAction(nameof(Detail), new { id });
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+
+                CargarListasFormulario();
+                return View(viewModel);
+            }
         }
 
         public IActionResult Delete(int id)
