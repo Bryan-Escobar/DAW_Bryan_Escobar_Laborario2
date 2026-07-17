@@ -101,17 +101,72 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
             return View(viewmodel);
         }
 
+
+        private void CargarListasFormulario()
+        {
+            ViewBag.Modelos = new SelectList(new[]
+            {
+          "Camisa", "Pantalón", "Chaqueta", "Vestido", "Sudadera"
+            });
+
+            ViewBag.Colores = new SelectList(new[]
+            {
+          "Negro", "Blanco", "Azul", "Rojo", "Verde"
+             });
+
+            ViewBag.Tallas = new SelectList(new[]
+            {
+          "S", "M", "L", "XL"
+             });
+
+            ViewBag.Impresoras = new SelectList(Impresoras);
+
+            ViewBag.Prioridades = new SelectList(
+                Enum.GetValues<PrioridadEtiqueta>());
+
+            ViewBag.Estados = new SelectList(
+                Enum.GetValues<EstadoEtiqueta>());
+        }
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            CargarListasFormulario();
+
+            return View(new EtiquetaViewModel
+            {
+                Estado = EstadoEtiqueta.Pendiente,
+                Prioridad = PrioridadEtiqueta.Normal,
+                CantidadGenerada = 0
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(EtiquetaViewModel viewModel)
         {
-            return RedirectToAction(nameof(Index));
+            if (!ModelState.IsValid)
+            {
+                CargarListasFormulario();
+                return View(viewModel);
+            }
+
+            try
+            {
+                _repo.Agregar(viewModel.ToModelo());
+
+                TempData["Exito"] = "La solicitud se creó correctamente.";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+
+                CargarListasFormulario();
+                return View(viewModel);
+            }
         }
+
 
         public IActionResult Edit(int id)
         {
