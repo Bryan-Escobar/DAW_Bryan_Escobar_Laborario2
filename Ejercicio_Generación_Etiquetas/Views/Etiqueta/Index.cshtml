@@ -47,7 +47,7 @@
 </div>
 
 <div class="card">
-    <div class="card-body p-0">
+    <div class="card-body p-0 table-responsive">
         <table class="table table-striped table-hover mb-0">
             <thead>
                 <tr>
@@ -87,9 +87,15 @@
                             <td>@etiqueta.Prioridad</td>
                             <td>@(etiqueta.PorcentajeAvance.ToString("F1"))%</td>
                             <td class="text-end">
-                                <a asp-action="Detail" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-primary">Ver</a>
-                                <a asp-action="Edit" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
-                                <a asp-action="Delete" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                <a asp-action="Detail" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-primary icon-action" aria-label="Ver detalle" title="Ver detalle">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-secondary icon-action" aria-label="Editar" title="Editar">
+                                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-danger icon-action" aria-label="Eliminar" title="Eliminar">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
                     }

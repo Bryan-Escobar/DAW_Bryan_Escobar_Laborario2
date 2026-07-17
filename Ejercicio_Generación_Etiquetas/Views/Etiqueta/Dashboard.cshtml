@@ -96,7 +96,7 @@
     <div class="card-header">
         <h5 class="mb-0">Últimas 5 solicitudes</h5>
     </div>
-    <div class="card-body p-0">
+    <div class="card-body p-0 table-responsive">
         <table class="table table-striped mb-0">
             <thead>
                 <tr>
@@ -124,7 +124,9 @@
                         <td>@(etiqueta.PorcentajeAvance.ToString("F1"))%</td>
                         <td>@etiqueta.TiempoTranscurrido</td>
                         <td>
-                            <a asp-action="Detail" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-primary">Ver</a>
+                            <a asp-action="Detail" asp-route-id="@etiqueta.Id" class="btn btn-sm btn-outline-primary icon-action" aria-label="Ver detalle" title="Ver detalle">
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 }

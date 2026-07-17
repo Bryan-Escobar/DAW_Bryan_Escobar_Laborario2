@@ -59,49 +59,63 @@
 @if (Model.Estado != Ejercicio_Generación_Etiquetas.Models.EstadoEtiqueta.Impresa &&
      Model.Estado != Ejercicio_Generación_Etiquetas.Models.EstadoEtiqueta.Cancelada)
 {
-    <div class="card mb-4">
-        <div class="card-header">Operaciones de planta</div>
+    <div class="card plant-operations mb-4">
+        <div class="card-header d-flex align-items-center gap-2">
+            <i class="bi bi-gear-wide-connected text-primary"></i>
+            Operaciones de planta
+        </div>
 
-        <div class="card-body">
-            <div class="row g-3">
+        <div class="card-body p-3">
+            <div class="row g-3 align-items-stretch">
                 <div class="col-lg-5">
-                    <h6>Generar etiquetas</h6>
-                    <form asp-action="Generar" method="post" class="row g-2 align-items-end">
-                        <input type="hidden" name="id" value="@Model.Id" />
-                        <div class="col-sm-7">
-                            <label for="cantidad" class="form-label">Cantidad a generar</label>
-                            <input id="cantidad" name="cantidad" type="number" min="1" max="@Model.CantidadPendiente" class="form-control" required />
+                    <div class="operation-panel h-100">
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="operation-icon text-success"><i class="bi bi-printer"></i></span>
+                            <div><h6 class="mb-0">Generar etiquetas</h6><small class="text-muted">Pendientes: @Model.CantidadPendiente</small></div>
                         </div>
-                        <div class="col-sm-5">
-                            <button type="submit" class="btn btn-success w-100">Generar</button>
-                        </div>
-                    </form>
+                        <form asp-action="Generar" method="post" class="d-flex gap-2 align-items-end">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <div class="flex-grow-1">
+                                <label for="cantidad" class="form-label small mb-1">Cantidad a generar</label>
+                                <input id="cantidad" name="cantidad" type="number" min="1" max="@Model.CantidadPendiente" class="form-control" required />
+                            </div>
+                            <button type="submit" class="btn btn-success"><i class="bi bi-play-fill me-1"></i>Generar</button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="col-lg-4">
-                    <h6>Cambiar estado</h6>
-                    <form asp-action="CambiarEstado" method="post" class="row g-2 align-items-end">
-                        <input type="hidden" name="id" value="@Model.Id" />
-                        <div class="col-sm-7">
-                            <label for="nuevoEstado" class="form-label">Nuevo estado</label>
-                            <select id="nuevoEstado" name="nuevoEstado" class="form-select">
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="Procesando">Procesando</option>
-                                <option value="Error">Error</option>
-                            </select>
+                    <div class="operation-panel h-100">
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="operation-icon text-primary"><i class="bi bi-arrow-repeat"></i></span>
+                            <div><h6 class="mb-0">Cambiar estado</h6><small class="text-muted">Actualiza el seguimiento</small></div>
                         </div>
-                        <div class="col-sm-5">
-                            <button type="submit" class="btn btn-primary w-100">Actualizar</button>
-                        </div>
-                    </form>
+                        <form asp-action="CambiarEstado" method="post" class="d-flex gap-2 align-items-end">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <div class="flex-grow-1">
+                                <label for="nuevoEstado" class="form-label small mb-1">Nuevo estado</label>
+                                <select id="nuevoEstado" name="nuevoEstado" class="form-select">
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Procesando">Procesando</option>
+                                    <option value="Error">Error</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" aria-label="Actualizar estado" title="Actualizar estado"><i class="bi bi-check-lg"></i></button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="col-lg-3">
-                    <h6>Cancelar solicitud</h6>
-                    <form asp-action="Cancelar" method="post">
-                        <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn btn-outline-danger w-100">Cancelar</button>
-                    </form>
+                    <div class="operation-panel operation-cancel h-100 d-flex flex-column">
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="operation-icon text-danger"><i class="bi bi-x-circle"></i></span>
+                            <div><h6 class="mb-0">Cancelar</h6><small class="text-muted">Detiene la solicitud</small></div>
+                        </div>
+                        <form asp-action="Cancelar" method="post" class="mt-auto">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-outline-danger w-100"><i class="bi bi-x-lg me-1"></i>Cancelar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
