@@ -216,13 +216,34 @@ namespace Ejercicio_Generación_Etiquetas.Controllers
 
         public IActionResult Delete(int id)
         {
-            return View();
+            var etiqueta = _repo.ObtenerPorId(id);
+
+            if (etiqueta is null)
+            {
+                return NotFound();
+            }
+
+            return View(EtiquetaViewModel.DesdeModelo(etiqueta));
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
+            var etiqueta = _repo.ObtenerPorId(id);
+
+            if (etiqueta is null)
+            {
+                return NotFound();
+            }
+
+            if (!_repo.Eliminar(id))
+            {
+                TempData["Error"] = "No se puede eliminar una etiqueta que ya fue impresa.";
+                return RedirectToAction(nameof(Detail), new { id });
+            }
+
+            TempData["Exito"] = "La solicitud se eliminó correctamente.";
             return RedirectToAction(nameof(Index));
         }
 

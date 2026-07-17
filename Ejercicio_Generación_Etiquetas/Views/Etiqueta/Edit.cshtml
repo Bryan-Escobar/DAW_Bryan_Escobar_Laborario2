@@ -1,0 +1,103 @@
+@model Ejercicio_Generación_Etiquetas.ViewModels.EtiquetaViewModel
+
+@{
+    ViewData["Title"] = "Editar solicitud";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Editar solicitud de etiquetas</h1>
+        <p class="text-muted mb-0">Actualiza los datos de la solicitud @Model.NumeroEtiqueta.</p>
+    </div>
+
+    <a asp-action="Detail" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancelar</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+            <input asp-for="Id" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="NumeroEtiqueta" class="form-label"></label>
+                    <input asp-for="NumeroEtiqueta" class="form-control" />
+                    <span asp-validation-for="NumeroEtiqueta" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Orden" class="form-label"></label>
+                    <input asp-for="Orden" class="form-control" />
+                    <span asp-validation-for="Orden" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Modelo" class="form-label"></label>
+                    <select asp-for="Modelo" asp-items="ViewBag.Modelos" class="form-select">
+                        <option value="">Seleccione un modelo</option>
+                    </select>
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Color" class="form-label"></label>
+                    <select asp-for="Color" asp-items="ViewBag.Colores" class="form-select">
+                        <option value="">Seleccione un color</option>
+                    </select>
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Talla" class="form-label"></label>
+                    <select asp-for="Talla" asp-items="ViewBag.Tallas" class="form-select">
+                        <option value="">Seleccione una talla</option>
+                    </select>
+                    <span asp-validation-for="Talla" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Usuario" class="form-label"></label>
+                    <input asp-for="Usuario" class="form-control" />
+                    <span asp-validation-for="Usuario" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Impresora" class="form-label"></label>
+                    <select asp-for="Impresora" asp-items="ViewBag.Impresoras" class="form-select">
+                        <option value="">Seleccione una impresora</option>
+                    </select>
+                    <span asp-validation-for="Impresora" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="CantidadSolicitada" class="form-label"></label>
+                    <input asp-for="CantidadSolicitada" type="number" min="1" class="form-control" />
+                    <span asp-validation-for="CantidadSolicitada" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="CantidadGenerada" class="form-label"></label>
+                    <input asp-for="CantidadGenerada" type="number" min="0" class="form-control" />
+                    <span asp-validation-for="CantidadGenerada" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Prioridad" class="form-label"></label>
+                    <select asp-for="Prioridad" asp-items="ViewBag.Prioridades" class="form-select"></select>
+                    <span asp-validation-for="Prioridad" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <a asp-action="Detail" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
